@@ -1,7 +1,17 @@
+@use "sass:color";
+
 @function viewportSize($size) {
   @return calc($size * (var(--viewport-width) / var(--base-viewport-width)));
 }
 
 @function goldenLineHeight($font-size) {
   @return viewportSize(calc($font-size * 1.618));
+}
+
+@function extractRGB($color) {
+  @return color.channel($color, "red", rgb), color.channel($color, "green", rgb), color.channel($color, "blue", rgb);
+}
+
+@function cssColor($value, $alpha: 1) {
+  @return rgba(var(--color-#{unquote($value)}), $alpha);
 }
