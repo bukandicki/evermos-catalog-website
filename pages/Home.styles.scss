@@ -2,13 +2,21 @@
 @use '~/assets/scss/mixins.scss' as *;
 
 .CatalogPage {
-  padding: 0 viewportSize(60);
+  padding: 0 viewportSize(24);
+
+  @include desktop-screen {
+    padding: 0 viewportSize(60);
+  }
 }
 
 .CatalogPage__hero {
   width: 100%;
-  height: viewportSize(650);
+  height: viewportSize(400);
   background-color: aquamarine;
+
+  @include desktop-screen {
+    height: viewportSize(650);
+  }
 }
 
 .Product__categories {
@@ -18,15 +26,20 @@
   justify-content: center;
 
   button {
-    @include fontStyling("Archivo", 16, 500)
+    @include fontStyling("Archivo", 16, 500);
   }
 }
 
 .Product__items {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: viewportSize(32);
+  grid-template-columns: repeat(2, 1fr);
+  gap: viewportSize(24);
+
+  @include desktop-screen {
+    gap: viewportSize(32);
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .Product__box {
@@ -54,8 +67,15 @@
   display: block;
 }
 
+.Product__name {
+  @include fontStyling("Archivo", 16, 500);
+}
+
 .Product__rating {
+  @include fontStyling("Archivo", 16, 500);
 }
 
 .Product__price {
+  @include fontStyling("Archivo", 16, 400);
+  color: cssColor("slate");
 }
