@@ -1,0 +1,45 @@
+@use '~/assets/scss/functions.scss' as *;
+@use '~/assets/scss/mixins.scss' as *;
+
+.Header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: viewportSize(40);
+}
+
+.Header__brand {
+  width: viewportSize(150);
+}
+
+.Header__nav {
+  width: 100%;
+}
+
+.Nav__list {
+  display: flex;
+  gap: viewportSize(44);
+
+  &--center,
+  &--right {
+    position: absolute;
+    top: 50%;
+  }
+
+  &--center {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &--right {
+    transform: translateY(-50%);
+    right: viewportSize(40);
+    gap: viewportSize(32);
+  }
+}
+
+.Nav__item {
+  button {
+    @include fontStyling("Clash Display", 16, 500);
+  }
+}
