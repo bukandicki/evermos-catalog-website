@@ -1,0 +1,5 @@
+@use '~/assets/scss/mixins.scss' as *;
+
+h1 {
+  @include fontStyling("Clash Display", 50, 500)
+}
