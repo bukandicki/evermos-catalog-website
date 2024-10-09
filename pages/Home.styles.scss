@@ -5,7 +5,7 @@
   padding: 0 viewportSize(24);
 
   @include desktop-screen {
-    padding: 0 viewportSize(60);
+    padding: 0 viewportSize(40);
   }
 }
 
@@ -44,38 +44,68 @@
 
 .Product__box {
   width: 100%;
+  position: relative;
+  background-color: #eeeeee;
+  overflow: hidden;
+
+  &:hover {
+    .Product__cta {
+      transform: translateX(0%);
+    }
+
+    .Product__image img {
+      transform: scale(1.1)
+    }
+  }
+}
+
+.Product__cta {
+  @include fontStyling("Archivo", 20, 500);
+  position: absolute;
+  top: viewportSize(60);
+  right: 0;
+  padding: viewportSize(16) viewportSize(24);
+  background-color: cssColor(eerie);
+  color: #eeeeee;
+  transform: translateX(110%);
+  transition: transform .85s cubic-bezier(0.87, 0, 0.13, 1);
+  z-index: 1;
 }
 
 .Product__image {
   width: 100%;
-  background-color: #eeeeee;
+  aspect-ratio: 1 / 1;
 
   img {
     width: 100%;
     height: 100%;
+    transition: transform .85s cubic-bezier(0.87, 0, 0.13, 1);
   }
 }
 
 .Product__detail {
-  margin-top: viewportSize(32);
+  margin: viewportSize(40) viewportSize(24) viewportSize(24);
 }
 
 .Product__name,
 .Product__rating,
 .Product__price {
-  text-align: center;
   display: block;
 }
 
 .Product__name {
-  @include fontStyling("Archivo", 16, 500);
+  @include fontStyling("Clash Display", 20, 500);
+  margin-top: viewportSize(14);
 }
 
 .Product__rating {
-  @include fontStyling("Archivo", 16, 500);
+  @include fontStyling("Archivo", 14, 400);
+  display: flex;
+  align-items: center;
+  gap: viewportSize(8);
 }
 
 .Product__price {
-  @include fontStyling("Archivo", 16, 400);
-  color: cssColor("slate");
+  @include fontStyling("Archivo", 16, 300);
+  color: cssColor(slate);
 }

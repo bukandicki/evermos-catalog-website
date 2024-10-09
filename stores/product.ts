@@ -20,6 +20,7 @@ export const useProductStore = defineStore("product", () => {
       "title",
       "price",
       "description",
+      "reviews",
       "category",
       "thumbnail",
       "availabilityStatus",
