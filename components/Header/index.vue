@@ -1,16 +1,23 @@
 <script setup lang="ts">
   import CartIcon from "~/assets/icons/cart-icon.vue"
   import HeartIcon from "~/assets/icons/heart-icon.vue"
+  import MenuIcon from "~/assets/icons/menu-icon.vue"
 </script>
 
 <template>
   <header class="Header">
-    <NuxtLink href="/">
-      <NuxtImg
-        src="/images/evermos-logo.png"
-        class="Header__brand"
-      />
-    </NuxtLink>
+    <div class="Header__controls">
+      <button>
+        <MenuIcon />
+      </button>
+
+      <NuxtLink href="/">
+        <NuxtImg
+          src="/images/evermos-logo.png"
+          class="Header__brand"
+        />
+      </NuxtLink>
+    </div>
 
     <nav class="Header__nav">
       <ul class="Nav__list Nav__list--center">
@@ -31,12 +38,12 @@
       <ul class="Nav__list Nav__list--right">
         <li class="Nav__item">
           <button>
-            <HeartIcon width="22" height="22" />
+            <HeartIcon />
           </button>
         </li>
         <li class="Nav__item">
           <button>
-            <CartIcon width="22" height="22" />
+            <CartIcon />
           </button>
         </li>
       </ul>

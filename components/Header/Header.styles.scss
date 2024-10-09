@@ -5,11 +5,36 @@
   display: flex;
   align-items: center;
   position: relative;
-  padding: viewportSize(40);
+  padding: viewportSize(44) viewportSize(24);
+
+  @include desktop-screen {
+    padding: viewportSize(40);
+  }
+}
+
+.Header__controls {
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: viewportSize(40);
+    height: viewportSize(40);
+    margin-right: viewportSize(20);
+  }
+
+  @include desktop-screen {
+    svg {
+      display: none;
+    }
+  }
 }
 
 .Header__brand {
-  width: viewportSize(150);
+  width: viewportSize(132);
+
+  @include desktop-screen {
+    width: viewportSize(150);
+  }
 }
 
 .Header__nav {
@@ -27,14 +52,37 @@
   }
 
   &--center {
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: none;
+
+    @include desktop-screen {
+      display: flex;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   &--right {
     transform: translateY(-50%);
-    right: viewportSize(40);
+    right: viewportSize(24);
     gap: viewportSize(32);
+
+    @include desktop-screen {
+      right: viewportSize(40);
+    }
+  }
+}
+
+.Nav__list--right {
+  svg {
+    width: viewportSize(32);
+    height: viewportSize(32);
+  }
+
+  @include desktop-screen {
+    svg {
+      width: viewportSize(22);
+      height: viewportSize(22);
+    }
   }
 }
 
