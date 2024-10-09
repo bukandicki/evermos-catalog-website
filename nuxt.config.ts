@@ -3,6 +3,31 @@ export default defineNuxtConfig({
   ssr: true,
   modules: ['@pinia/nuxt', '@nuxt/image', '@nuxt/fonts'],
   css: ["~/assets/scss/preflight.scss"],
+
+  fonts: {
+    defaults: { style: ["normal"] },
+    families: [
+      {
+        name: "Archivo",
+        src: "/fonts/Archivo-Light.woff2",
+        global: true,
+        weight: 300
+      },
+      {
+        name: "Archivo",
+        src: "/fonts/Archivo-Regular.woff2",
+        global: true,
+        weight: 400
+      },
+      {
+        name: "Clash Display",
+        src: "/fonts/ClashDisplay-Medium.woff2",
+        global: true,
+        weight: 500
+      },
+    ]
+  },
+
   vite: {
     css: {
       preprocessorOptions: {
