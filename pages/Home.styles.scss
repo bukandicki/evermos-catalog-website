@@ -19,14 +19,36 @@
   }
 }
 
+.Product__filter {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: viewportSize(32) 0;
+}
+
+.Filter__wrapper {
+  display: flex;
+  gap: viewportSize(32);
+}
+
 .Product__categories {
   display: flex;
   gap: viewportSize(32);
-  margin: viewportSize(32) 0;
-  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%)
+}
 
-  button {
-    @include fontStyling("Archivo", 16, 500);
+.Category__btn {
+  @include fontStyling("Clash Display", 20, 500);
+  transition: color .35s cubic-bezier(0.87, 0, 0.13, 1);
+
+  &--selected {
+    color: cssColor(french);
+  }
+
+  @include tablet-screen {
+    @include fontStyling("Clash Display", 16, 500);
   }
 }
 
@@ -44,8 +66,11 @@
 
 .Product__box {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  background-color: #eeeeee;
+  background-color: cssColor(seasalt);
   overflow: hidden;
 
   &:hover {
@@ -66,7 +91,7 @@
   right: 0;
   padding: viewportSize(16) viewportSize(24);
   background-color: cssColor(eerie);
-  color: #eeeeee;
+  color: cssColor(seasalt);
   transform: translateX(110%);
   transition: transform .85s cubic-bezier(0.87, 0, 0.13, 1);
   z-index: 1;
@@ -75,6 +100,7 @@
 .Product__image {
   width: 100%;
   aspect-ratio: 1 / 1;
+  margin-bottom: viewportSize(40);
 
   img {
     width: 100%;
@@ -84,7 +110,7 @@
 }
 
 .Product__detail {
-  margin: viewportSize(40) viewportSize(24) viewportSize(24);
+  margin: auto viewportSize(24) viewportSize(24);
 }
 
 .Product__name,
@@ -103,6 +129,11 @@
   display: flex;
   align-items: center;
   gap: viewportSize(8);
+
+  svg {
+    width: viewportSize(16);
+    height: viewportSize(16);
+  }
 }
 
 .Product__price {
