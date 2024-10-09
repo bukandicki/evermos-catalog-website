@@ -1,0 +1,59 @@
+@use '~/assets/scss/functions.scss' as *;
+@use '~/assets/scss/mixins.scss' as *;
+
+.FilterMenu {
+  position: relative;
+}
+
+.FilterMenu__trigger {
+  display: flex;
+  align-items: center;
+
+  span {
+    @include fontStyling("Clash Display", 20, 500);
+  }
+
+  svg {
+    width: viewportSize(20);
+    height: viewportSize(20);
+    margin-right: viewportSize(8);
+  }
+
+  @include tablet-screen {
+    span {
+      @include fontStyling("Clash Display", 16, 500);
+    }
+  }
+}
+
+.FilterMenu__list {
+  position: absolute;
+  z-index: 2;
+  top: viewportSize(40);
+  left: 0;
+  height: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0 viewportSize(4) viewportSize(16), rgba(17, 17, 26, 0.05) 0 viewportSize(8) viewportSize(32);
+
+  li {
+    opacity: 0;
+    transform: translateY(100%)
+  }
+
+  li button {
+    @include fontStyling("Clash Display", 16, 500);
+    width: 100%;
+    white-space: nowrap;
+    text-align: left;
+    padding: viewportSize(16) viewportSize(32);
+  }
+}
+
+.FilterMenu__btn {
+  transition: background-color .35s cubic-bezier(0.87, 0, 0.13, 1);
+
+  &--selected {
+    background-color: cssColor(french);
+  }
+}
