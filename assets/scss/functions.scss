@@ -1,3 +1,7 @@
 @function viewportSize($size) {
-  @return calc($size * (var(--current-vw) / var(--base-viewport)));
+  @return calc($size * (var(--viewport-width) / var(--base-viewport-width)));
+}
+
+@function goldenLineHeight($font-size) {
+  @return viewportSize(calc($font-size * 1.618));
 }
