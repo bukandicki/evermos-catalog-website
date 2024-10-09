@@ -1,6 +1,18 @@
+@use "variables.scss" as *;
+@use "mixins.scss" as *;
+@use "functions.scss" as *;
+
 :root {
   --viewport-width: 100vw;
-  --base-viewport-width: 1920;
+  --base-viewport-width: 768;
+
+  @each $key, $value in $colors {
+    --color-#{$key}: #{extractRGB($value)};
+  }
+
+  @include desktop-screen {
+    --base-viewport-width: 1920;
+  }
 }
 
 * {
@@ -10,6 +22,7 @@
 }
 
 button {
+  display: block;
   background-color: transparent;
   cursor: pointer;
   border: none;
