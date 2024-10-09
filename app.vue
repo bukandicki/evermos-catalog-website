@@ -10,6 +10,8 @@
   <NuxtRouteAnnouncer />
 
   <NuxtLayout>
+    <LazyHeader />
     <NuxtPage />
+    <LazyFooter />
   </NuxtLayout>
 </template>
