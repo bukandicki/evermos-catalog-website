@@ -4,10 +4,14 @@
 
 :root {
   --viewport-width: 100vw;
-  --base-viewport-width: 768;
+  --base-viewport-width: 440;
 
   @each $key, $value in $colors {
     --color-#{$key}: #{extractRGB($value)};
+  }
+
+  @include tablet-screen {
+    --base-viewport-width: 768;
   }
 
   @include desktop-screen {
@@ -33,6 +37,7 @@ ol, ul {
 }
 
 svg, img {
+  display: block;
   vertical-align: middle;
 }
 
