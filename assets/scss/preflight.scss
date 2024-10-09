@@ -8,3 +8,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+ol, ul {
+  list-style: none;
+}
