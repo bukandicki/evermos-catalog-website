@@ -31,3 +31,12 @@ button {
 ol, ul {
   list-style: none;
 }
+
+svg, img {
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
