@@ -1,9 +1,61 @@
+@use '~/assets/scss/functions.scss' as *;
 @use '~/assets/scss/mixins.scss' as *;
 
 .CatalogPage {
-
+  padding: 0 viewportSize(60);
 }
 
-.Product {
+.CatalogPage__hero {
+  width: 100%;
+  height: viewportSize(650);
+  background-color: aquamarine;
+}
 
+.Product__categories {
+  display: flex;
+  gap: viewportSize(32);
+  margin: viewportSize(32) 0;
+  justify-content: center;
+
+  button {
+    @include fontStyling("Archivo", 16, 500)
+  }
+}
+
+.Product__items {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: viewportSize(32);
+}
+
+.Product__box {
+  width: 100%;
+}
+
+.Product__image {
+  width: 100%;
+  background-color: #eeeeee;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.Product__detail {
+  margin-top: viewportSize(32);
+}
+
+.Product__name,
+.Product__rating,
+.Product__price {
+  text-align: center;
+  display: block;
+}
+
+.Product__rating {
+}
+
+.Product__price {
 }
