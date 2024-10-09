@@ -14,6 +14,7 @@ export type ProductType = {
   availabilityStatus: string;
   discountPercentage: string;
   rating: number;
+  reviews: any[];
 }
 
 export type ProductPagination = {

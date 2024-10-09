@@ -1,12 +1,43 @@
 <script setup lang="ts">
+  import type { FilterMenuItem } from "~/components/FilterMenu/FilterMenu.types";
+  import { FILTER_ORDER, PRODUCT_FIELDS } from "~/lib/constants";
+  import StarIcon from "~/assets/icons/star-icon.vue"
+  import SortIcon from "~/assets/icons/sort-icon.vue"
+  import FilterIcon from "~/assets/icons/filter-icon.vue"
+
   definePageMeta({ name: "CatalogPage" })
 
-  const { productData, categories, fetchCategories, fetchProducts } = useProductStore()
-
-  fetchCategories()
-  fetchProducts()
-
   useSeoMeta({ title: "Catalog" })
+
+  const store = useProductStore()
+
+  const filter = ref<{ category: string; sortBy: string; order: "asc" | "desc"; }>({
+    category: "all",
+    sortBy: "discountPercentage",
+    order: "desc"
+  })
+
+  const publicProductField = computed(() => {
+    return PRODUCT_FIELDS.reduce((filtered, current) => {
+      if (current.public) filtered.push({ title: current.title, value: current.name })
+
+      return filtered
+    }, [] as FilterMenuItem<string>[])
+  })
+
+  store.fetchCategories()
+  store.fetchProducts({
+    limit: 12,
+    sortBy: { field: filter.value.sortBy, order: filter.value.order }
+  })
+
+  watch(filter, (newVal) => {
+    store.fetchProducts({
+      category: newVal.category,
+      limit: 12,
+      sortBy: { field: newVal.sortBy, order: newVal.order }
+    })
+  }, { deep: true })
 </script>
 
 <template>
@@ -14,28 +45,98 @@
     <section class="CatalogPage__hero"></section>
 
     <section class="CatalogPage__product">
-      <ul class="Product__categories">
-        <li v-for="category in categories?.slice(0, 5)" :key="category.slug">
-          <button>{{ category.name }}</button>
-        </li>
-      </ul>
+      <div class="Product__filter">
+        <div class="Filter__wrapper">
+          <FilterMenu
+            title="Sort By"
+            :value="filter.sortBy"
+            :items="publicProductField"
+            @selected="filter.sortBy = $event"
+          >
+            <template #icon>
+              <FilterIcon />
+            </template>
+          </FilterMenu>
+
+          <FilterMenu
+            title="Order"
+            :value="filter.order"
+            :items="FILTER_ORDER"
+            @selected="filter.order = $event"
+          >
+            <template #icon>
+              <SortIcon />
+            </template>
+          </FilterMenu>
+        </div>
+
+        <ul class="Product__categories">
+          <li>
+            <button
+              :class="[
+                'Category__btn',
+                { 'Category__btn--selected': filter.category === 'all' }
+              ]"
+              @click="filter.category = 'all'"
+            >
+              All
+            </button>
+          </li>
+
+          <li
+            v-for="category in store.categories?.slice(0, 5)"
+            :key="category.slug"
+          >
+            <button
+              :class="[
+                'Category__btn',
+                { 'Category__btn--selected': filter.category === category.slug }
+              ]"
+              @click="filter.category = category.slug"
+            >
+              {{ category.name }}
+            </button>
+          </li>
+        </ul>
+      </div>
 
       <ol class="Product__items">
-        <li class="Product__box" v-for="product in productData?.products" :key="product.id">
-          <div class="Product__image">
-            <NuxtImg
-              :src="product.thumbnail"
-              width="300"
-              height="300"
-              sizes="100vw md:300px lg:540px"
-              preload
-            />
-          </div>
+        <li
+          v-for="product in store.productData?.products"
+          :key="product.id"
+        >
+          <NuxtLink
+            class="Product__box"
+            :href="`/products/${product.id}`"
+          >
+            <button class="Product__cta">Add to cart</button>
 
-          <div class="Product__detail">
-            <strong class="Product__name">{{ product.title }}</strong>
-            <span class="Product__price">${{ product.price }}</span>
-          </div>
+            <div class="Product__image">
+              <NuxtImg
+                :src="product.thumbnail"
+                :alt="`${product.title} Image`"
+                width="300"
+                height="300"
+                sizes="100vw md:300px lg:540px"
+                preload
+              />
+            </div>
+
+            <div class="Product__detail">
+              <strong class="Product__rating">
+                <StarIcon />
+                {{ product.rating }} ({{ product.reviews.length }} Reviews)
+              </strong>
+
+              <strong class="Product__name">
+                {{ product.title }}
+              </strong>
+
+              <span class="Product__price">
+                ${{ product.price }}
+              </span>
+            </div>
+          </NuxtLink>
         </li>
       </ol>
     </section>
