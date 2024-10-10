@@ -22,16 +22,24 @@
     <nav class="Header__nav">
       <ul class="Nav__list Nav__list--center">
         <li class="Nav__item">
-          <button>About</button>
+          <button>
+            <LazyAnimatedText value="About" />
+          </button>
         </li>
         <li class="Nav__item">
-          <button>Membership</button>
+          <button>
+            <LazyAnimatedText value="Membership" />
+          </button>
         </li>
         <li class="Nav__item">
-          <button>Community</button>
+          <button>
+            <LazyAnimatedText value="Community" />
+          </button>
         </li>
         <li class="Nav__item">
-          <button>Blog</button>
+          <button>
+            <LazyAnimatedText value="Blog" />
+          </button>
         </li>
       </ul>
 

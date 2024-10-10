@@ -77,7 +77,9 @@
     <button class="FilterMenu__trigger" @click="handleShowList">
       <slot name="icon" />
 
-      <span>{{ props.title }}</span>
+      <LazyAnimatedText
+        :value="props.title"
+      />
     </button>
 
     <ul ref="menuListRef" class="FilterMenu__list">

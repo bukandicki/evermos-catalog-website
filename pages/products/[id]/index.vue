@@ -44,42 +44,65 @@
           </div>
         </div>
 
-        <strong class="CatalogDetail__category">{{ store.productDetail?.category }}</strong>
+        <strong class="CatalogDetail__category">
+          <LazyAnimatedText
+            :value="(store.productDetail?.category as string) || ''"
+          />
+        </strong>
 
         <div class="ProductDetail__purchase">
           <button>
-            <span>
-              Buy / ${{ store.productDetail?.price }} USD
-            </span>
+            <LazyAnimatedText
+              :value="`Buy / $${store.productDetail?.price} USD`"
+            />
           </button>
 
-          <span>* Not include Tax 10%</span>
+          <LazyAnimatedText
+            value="* Not include Tax 10%"
+          />
         </div>
       </section>
 
       <section class="CatalogDetail__information">
-        <span class="Information__brand">{{ store.productDetail?.brand }}</span>
+        <LazyAnimatedText
+          class="Information__brand"
+          :value="(store.productDetail?.brand as string) || ''"
+        />
 
-        <h1 class="Information__title">{{ store.productDetail?.title }}</h1>
+        <h1 class="Information__title">
+          <LazyAnimatedText
+            :value="(store.productDetail?.title as string)"
+          />
+        </h1>
 
-        <p class="Information__description">{{ store.productDetail?.description }}</p>
+        <p class="Information__description">
+          <LazyAnimatedText
+            :value="(store.productDetail?.description as string)"
+          />
+        </p>
 
         <h2 class="Information__price">
-          ${{ store.productDetail?.price }} USD
+          <LazyAnimatedText
+            :value="`$${store.productDetail?.price} USD`"
+          />
         </h2>
 
         <p class="Information__warranty">
-          <span>
-            {{ store.productDetail?.warrantyInformation }}
-          </span>
+          <LazyAnimatedText
+            :value="(store.productDetail?.warrantyInformation as string)"
+          />
 
-          <span>
-            — {{ store.productDetail?.shippingInformation }}
-          </span>
+          <LazyAnimatedText
+            :value="`— ${store.productDetail?.shippingInformation}`"
+          />
         </p>
 
         <section class="CatalogDetail__reviews">
-          <h2 class="Reviews__headline">Reviews ({{ store.productDetail?.reviews.length }})</h2>
+          <h2 class="Reviews__headline">
+            <LazyAnimatedText
+              :value="`Reviews (${store.productDetail?.reviews.length})`"
+            />
+          </h2>
 
           <ul class="Reviews__list">
             <li
@@ -88,14 +111,28 @@
               class="Reviews__item"
             >
               <div>
-                <span class="Reviews__date">{{ getFormatedDate(review.date) }}</span>
+                <LazyAnimatedText
+                  class="Reviews__date"
+                  :value="getFormatedDate(review.date)"
+                />
 
                 <div class="Reviews__detail">
-                  <strong>{{ review.reviewerName }}: {{ review.rating }}/5</strong>
-                  <span>{{ review.reviewerEmail }}</span>
+                  <strong>
+                    <LazyAnimatedText
+                      :value="`${review.reviewerName} — (${review.rating} / 5)`"
+                    />
+                  </strong>
+
+                  <LazyAnimatedText
+                    :value="review.reviewerEmail"
+                  />
                 </div>
 
-                <p class="Reviews__comment">{{ review.comment }}</p>
+                <p class="Reviews__comment">
+                  <LazyAnimatedText
+                    :value="review.comment"
+                  />
+                </p>
               </div>
 
               <div>

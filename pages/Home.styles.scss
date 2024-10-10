@@ -12,12 +12,145 @@
 .CatalogPage__hero {
   width: 100%;
   height: viewportSize(400);
-  background-color: aquamarine;
+  background-color: cssColor(seasalt);
+  overflow: hidden;
+  position: relative;
 
   @include desktop-screen {
     height: viewportSize(650);
   }
 }
+
+.Hero {
+  position: absolute;
+  z-index: 1;
+  width: 90%;
+  left: 50%;
+  transform: translate(-50%, 25%);
+
+  @include tablet-screen {
+    transform: translate(-50%, 15%);
+    width: viewportSize(500);
+  }
+
+  @include desktop-screen {
+    transform: unset;
+    width: unset;
+    max-width: viewportSize(720);
+    left: viewportSize(80);
+    bottom: viewportSize(80);
+  }
+}
+
+.Hero__tagline {
+  @include fontStyling("Clash Display", 24, 500);
+  margin-bottom: viewportSize(24);
+  text-align: center;
+
+  @include tablet-screen {
+    @include fontStyling("Clash Display", 36, 500);
+  }
+
+  @include desktop-screen {
+    @include fontStyling("Clash Display", 48, 500);
+    margin-bottom: viewportSize(24);
+    text-align: left;
+  }
+}
+
+.Hero__caption {
+  @include fontStyling("Archivo", 14, 300);
+  text-align: center;
+
+  @include tablet-screen {
+    @include fontStyling("Archivo", 16, 300);
+  }
+
+  @include desktop-screen {
+    text-align: left;
+  }
+}
+
+#Hero__img-1,
+#Hero__img-2,
+#Hero__img-3,
+#Hero__img-4 {
+  position: absolute;
+}
+
+#Hero__img-1 {
+  aspect-ratio: 1 / 1;
+  transform: translateY(100%);
+  width: viewportSize(200);
+  left: viewportSize(-40);
+  bottom: viewportSize(-30);
+
+  @include tablet-screen {
+    bottom: viewportSize(-70);
+    left: viewportSize(-40);
+    width: viewportSize(300);
+  }
+
+  @include desktop-screen {
+    right: viewportSize(500);
+    bottom: viewportSize(-100);
+    width: viewportSize(500);
+    left: unset;
+  }
+}
+
+#Hero__img-2 {
+  aspect-ratio: 1 / 1;
+  width: viewportSize(280);
+  bottom: viewportSize(-85);
+  right: viewportSize(0);
+  transform: translateY(100%);
+
+  @include tablet-screen {
+    width: viewportSize(500);
+    bottom: viewportSize(-190);
+    right: viewportSize(20);
+  }
+
+  @include desktop-screen {
+    right: 0;
+    bottom: viewportSize(-215);
+    width: viewportSize(700);
+  }
+}
+
+#Hero__img-3 {
+  width: viewportSize(260);
+  top: viewportSize(-50);
+  right: 0;
+  aspect-ratio: 1 / 1;
+  display: none;
+
+  @include desktop-screen {
+    display: block;
+    top: viewportSize(-72);
+    width: viewportSize(400);
+    transform: translateY(-100%);
+  }
+}
+
+#Hero__img-4 {
+  width: viewportSize(150);
+  top: viewportSize(-10);
+  aspect-ratio: 1 / 1;
+  left: viewportSize(60);
+  z-index: 2;
+  display: none;
+
+  @include desktop-screen {
+    display: block;
+    left: viewportSize(200);
+    top: viewportSize(-72);
+    width: viewportSize(300);
+    transform: translateY(-100%);
+  }
+}
+
 
 .Product__filter {
   display: flex;
@@ -89,7 +222,7 @@
     }
 
     .Product__image img {
-      transform: scale(1.1)
+      transform: scale(1);
     }
   }
 }
@@ -115,6 +248,7 @@
   img {
     width: 100%;
     height: 100%;
+    transform: scale(.95);
     transition: transform .85s cubic-bezier(0.87, 0, 0.13, 1);
   }
 }
