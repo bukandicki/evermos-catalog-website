@@ -8,6 +8,10 @@
 
   await store.fetchProductDetail(route.params.id as string)
 
+  const getFormatedDate = (date: Date) => {
+    return new Date(date).toLocaleDateString()
+  }
+
   useSeoMeta({
     title: store.productDetail?.title,
     description: store.productDetail?.description,
@@ -84,7 +88,7 @@
               class="Reviews__item"
             >
               <div>
-                <span class="Reviews__date">{{ review.date }}</span>
+                <span class="Reviews__date">{{ getFormatedDate(review.date) }}</span>
 
                 <div class="Reviews__detail">
                   <strong>{{ review.reviewerName }}: {{ review.rating }}/5</strong>
