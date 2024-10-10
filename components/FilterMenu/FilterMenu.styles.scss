@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
 
-  span {
+  > span {
     @include fontStyling("Clash Display", 20, 500);
   }
 
@@ -20,7 +20,7 @@
   }
 
   @include tablet-screen {
-    span {
+    > span {
       @include fontStyling("Clash Display", 16, 500);
     }
   }
