@@ -27,6 +27,10 @@
       }
     })
   })
+
+  onBeforeUnmount(() => {
+    ScrollTrigger.killAll()
+  })
 </script>
 
 <template>
