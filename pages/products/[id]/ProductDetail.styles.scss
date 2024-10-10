@@ -7,7 +7,7 @@
 
 .ProductDetail__overview {
   position: sticky;
-  top: 0;
+  top: viewportSize(96);
   width: viewportSize(720);
   aspect-ratio: 1 / 1;
   background-color: cssColor(seasalt);
