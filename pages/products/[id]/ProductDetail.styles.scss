@@ -3,28 +3,46 @@
 
 .CatalogDetail__wrapper {
   display: flex;
+  flex-direction: column;
+
+  @include desktop-screen {
+    flex-direction: row;
+  }
 }
 
 .ProductDetail__overview {
-  position: sticky;
-  top: viewportSize(96);
-  width: viewportSize(720);
-  aspect-ratio: 1 / 1;
+  width: 100%;
   background-color: cssColor(seasalt);
   align-self: flex-start;
+  padding-bottom: viewportSize(44);
+  position: relative;
 
   img {
     width: 100%;
     height: 100%;
   }
+
+  @include desktop-screen {
+    padding-bottom: 0;
+    width: viewportSize(720);
+    aspect-ratio: 1 / 1;
+    position: sticky;
+    top: viewportSize(96);
+  }
 }
 
 .CatalogDetail__gallery {
   display: flex;
-  position: absolute;
-  bottom: 0;
   gap: viewportSize(16);
-  margin: 0 0 viewportSize(16) viewportSize(16);
+  justify-content: center;
+  margin: 0 0 viewportSize(32) 0;
+
+  @include desktop-screen {
+    justify-content: unset;
+    margin: 0 0 viewportSize(16) viewportSize(16);
+    position: absolute;
+    bottom: 0;
+  }
 }
 
 .Gallery__item {
@@ -38,21 +56,24 @@
   }
 }
 
-.CatalogDetail__category,
-.ProductDetail__purchase {
-  position: absolute;
-}
-
 .CatalogDetail__category {
-  @include fontStyling("Archivo", 20, 300);
-  right: viewportSize(-60);
-  text-transform: uppercase;
-  top: viewportSize(44);
+  @include fontStyling("Archivo", 14, 300);
+  position: absolute;
+  top: viewportSize(20);
+  right: viewportSize(20);
+  text-transform: capitalize;
+
+  @include desktop-screen {
+    @include fontStyling("Archivo", 20, 300);
+    right: viewportSize(-20);
+    top: viewportSize(44);
+  }
 }
 
 .ProductDetail__purchase {
-  bottom: viewportSize(144);
-  right: viewportSize(-80);
+  width: fit-content;
+  text-align: center;
+  margin: 0 auto;
 
   button {
     @include fontStyling("Clash Display", 16, 500);
@@ -71,12 +92,26 @@
     @include fontStyling("Archivo", 12, 300);
     color: cssColor(slate);
   }
+
+  @include desktop-screen {
+    position: absolute;
+    bottom: viewportSize(144);
+    right: viewportSize(-80);
+    width: unset;
+    text-align: unset;
+    margin: unset;
+  }
 }
 
 .CatalogDetail__information {
-  width: viewportSize(720);
-  margin-top: viewportSize(144);
-  margin-left: viewportSize(208);
+  padding: 0 viewportSize(24);
+  margin-top: viewportSize(44);
+
+  @include desktop-screen {
+    width: viewportSize(720);
+    margin-top: viewportSize(144);
+    margin-left: viewportSize(208);
+  }
 }
 
 .Information__brand {
@@ -113,7 +148,11 @@
   border-top: solid viewportSize(1) cssColor(french);
   padding-top: viewportSize(80);
   margin-top: viewportSize(80);
-  padding-bottom: viewportSize(160);
+  padding-bottom: viewportSize(20);
+
+  @include desktop-screen {
+    padding-bottom: viewportSize(160);
+  }
 }
 
 .Reviews__headline {
