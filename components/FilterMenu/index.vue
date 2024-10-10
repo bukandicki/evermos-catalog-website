@@ -77,14 +77,12 @@
     <button class="FilterMenu__trigger" @click="handleShowList">
       <slot name="icon" />
 
-      <LazyAnimatedText
-        :value="props.title"
-      />
+      <LazyAnimatedText :value="title" />
     </button>
 
     <ul ref="menuListRef" class="FilterMenu__list">
       <li
-        v-for="(item, idx) in props.items"
+        v-for="(item, idx) in items"
         :key="idx"
       >
         <button

@@ -1,15 +1,60 @@
 <script setup lang="ts">
-  import StarIcon from "~/assets/icons/star-icon.vue"
+  import gsap from 'gsap';
 
   definePageMeta({ name: "CatalogDetaiPage" })
 
   const route = useRoute()
   const store = useProductStore()
+  const img = useImage()
 
   await store.fetchProductDetail(route.params.id as string)
 
+  const activeImage = ref<string>("")
+
   const getFormatedDate = (date: Date) => {
     return new Date(date).toLocaleDateString()
+  }
+
+  const handlePreview = (url: string) => {
+    if (url === activeImage.value) return
+
+    activeImage.value = url
+
+    const currentImg = document.querySelector(".Overview__img") as HTMLImageElement
+    const overviewSection = document.querySelector(".ProductDetail__overview") as HTMLElement
+
+    const imgEl = document.createElement("img")
+
+    const optimizedUrl = img(url, { format: "webp" })
+    const _srcset = img.getSizes(url, {
+      sizes: "100vw md:300px lg:720px",
+      modifiers: {
+        format: "webp",
+        width: 720,
+        height: 720,
+        quality: 40
+      }
+    })
+
+    imgEl.src = optimizedUrl
+    imgEl.classList.add("Overview__img")
+    imgEl.width = 720
+    imgEl.height = 720
+    imgEl.style.transform = "scale(.95)"
+    imgEl.style.opacity = "0"
+    imgEl.srcset = _srcset.srcset
+    imgEl.sizes = _srcset.sizes as string
+
+    currentImg.remove()
+    overviewSection.prepend(imgEl)
+
+    const tl = gsap.timeline({
+      defaults: { ease: "" }
+    })
+
+    imgEl.onload = function () {
+      tl.to(imgEl, { scale: 1, opacity: 1 })
+    }
   }
 
   useSeoMeta({
@@ -28,23 +73,34 @@
           width="720"
           height="720"
           sizes="100vw md:300px lg:720px"
+          format="webp"
+          class="Overview__img"
           preload
         />
 
-        <div class="CatalogDetail__gallery">
-          <div class="Gallery__item" v-for="imageUrl in store.productDetail?.images" :key="imageUrl">
+        <div class="Overview__gallery">
+          <div
+            :class="[
+              'Gallery__item',
+              { 'Gallery__item--active': activeImage === imageUrl }
+            ]"
+            v-for="imageUrl in store.productDetail?.images"
+            :key="imageUrl"
+            @mouseenter="() => handlePreview(imageUrl)"
+          >
             <NuxtImg
               :src="imageUrl"
               :alt="`${store.productDetail?.title} Image`"
               width="80"
               height="80"
               sizes="100vw md:100px"
+              format="webp"
               preload
             />
           </div>
         </div>
 
-        <strong class="CatalogDetail__category">
+        <strong class="Overview__category">
           <LazyAnimatedText
             :value="(store.productDetail?.category as string) || ''"
           />
