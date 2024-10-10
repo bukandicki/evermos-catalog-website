@@ -29,14 +29,24 @@
 .Filter__wrapper {
   display: flex;
   gap: viewportSize(32);
+
+  .FilterMenu:last-child {
+    @include desktop-screen {
+      display: none;
+    }
+  }
 }
 
 .Product__categories {
-  display: flex;
+  display: none;
   gap: viewportSize(32);
   position: absolute;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
+
+  @include desktop-screen {
+    display: flex;
+  }
 }
 
 .Category__btn {

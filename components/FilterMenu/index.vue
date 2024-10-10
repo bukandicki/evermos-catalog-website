@@ -21,7 +21,26 @@
   const handleShowList = () => {
     if (!menuListRef.value) return
 
-    console.log(tl);
+    const { left, width } = menuListRef.value.getBoundingClientRect()
+
+    /**
+     * Adjust the menu list position if it hits the right edge of the screen.
+     * When the list overflows, anchor it to the right to prevent overflow.
+     *
+    */
+    if ((left + width) > window.innerWidth) {
+      menuListRef.value.style.left = "unset"
+      menuListRef.value.style.right = "0"
+    }
+
+    tl.eventCallback("onReverseComplete", () => {
+      isActive.value = false
+    })
+
+    if (isActive.value) {
+      tl.reverse()
+      return
+    }
 
     if (tl.reversed()) {
       tl.play()
@@ -32,13 +51,13 @@
 
     tl.to(menuListRef.value, {
       height: "auto",
-      duration: .5,
+      duration: .4,
       ease: "circ.inOut",
       onComplete: () => {
         isActive.value = true
       }
     })
-    tl.to(listItems, { stagger: 0.050, opacity: 1, y: 0 }, .3)
+    tl.to(listItems, { stagger: 0.050, duration: .25, opacity: 1, y: 0 }, .25)
   }
 
   const handleFilterSelected = (value: T) => {
@@ -48,10 +67,6 @@
 
   useClickOutside(filterMenuRef, () => {
     if (!isActive.value) return
-
-    tl.eventCallback("onReverseComplete", () => {
-      isActive.value = false
-    })
 
     tl.reverse()
   })

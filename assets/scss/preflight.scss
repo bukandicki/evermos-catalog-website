@@ -25,6 +25,19 @@
   box-sizing: border-box;
 }
 
+html, body {
+  color: cssColor(eerie);
+}
+
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
 button {
   display: block;
   background-color: transparent;

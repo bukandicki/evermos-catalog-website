@@ -1,0 +1,157 @@
+@use "~/assets/scss/functions.scss" as *;
+@use "~/assets/scss/mixins.scss" as *;
+
+.CatalogDetail__wrapper {
+  display: flex;
+}
+
+.ProductDetail__overview {
+  position: sticky;
+  top: viewportSize(96);
+  width: viewportSize(720);
+  aspect-ratio: 1 / 1;
+  background-color: cssColor(seasalt);
+  align-self: flex-start;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.CatalogDetail__gallery {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  gap: viewportSize(16);
+  margin: 0 0 viewportSize(16) viewportSize(16);
+}
+
+.Gallery__item {
+  width: viewportSize(80);
+  aspect-ratio: 1 / 1;
+  background-color: #ffffff;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.CatalogDetail__category,
+.ProductDetail__purchase {
+  position: absolute;
+}
+
+.CatalogDetail__category {
+  @include fontStyling("Archivo", 20, 300);
+  right: viewportSize(-60);
+  text-transform: uppercase;
+  top: viewportSize(44);
+}
+
+.ProductDetail__purchase {
+  bottom: viewportSize(144);
+  right: viewportSize(-80);
+
+  button {
+    @include fontStyling("Clash Display", 16, 500);
+    border: solid viewportSize(2) cssColor(eerie);
+    padding: viewportSize(12) viewportSize(24);
+    color: cssColor(eerie);
+    margin-bottom: viewportSize(4);
+
+    span {
+      display: block;
+    }
+  }
+
+
+  > span {
+    @include fontStyling("Archivo", 12, 300);
+    color: cssColor(slate);
+  }
+}
+
+.CatalogDetail__information {
+  width: viewportSize(720);
+  margin-top: viewportSize(144);
+  margin-left: viewportSize(208);
+}
+
+.Information__brand {
+  @include fontStyling("Archivo", 16, 300);
+  color: cssColor(slate);
+}
+
+.Information__title {
+  @include fontStyling("Clash Display", 48, 500);
+  margin: viewportSize(32) 0 viewportSize(24);
+  max-width: viewportSize(600);
+}
+
+.Information__description {
+  @include fontStyling("Archivo", 16, 300);
+  max-width: viewportSize(500);
+  color: cssColor(slate);
+}
+
+.Information__price {
+  @include fontStyling("Archivo", 20, 300);
+  display: block;
+  margin: viewportSize(80) 0 viewportSize(32);
+}
+
+.Information__warranty {
+  @include fontStyling("Archivo", 14, 300);
+  display: flex;
+  justify-content: space-between;
+  color: cssColor(slate);
+}
+
+.CatalogDetail__reviews {
+  border-top: solid viewportSize(1) cssColor(french);
+  padding-top: viewportSize(80);
+  margin-top: viewportSize(80);
+  padding-bottom: viewportSize(160);
+}
+
+.Reviews__headline {
+  @include fontStyling("Clash Display", 24, 300);
+  margin-bottom: viewportSize(44);
+}
+
+.Reviews__item {
+  border-bottom: dashed viewportSize(1) cssColor(onyx);
+  padding-bottom: viewportSize(20);
+  display: flex;
+  justify-content: space-between;
+
+  &:not(:last-child) {
+    margin-bottom: viewportSize(20);
+  }
+}
+
+.Reviews__date {
+  @include fontStyling("Archivo", 12, 300);
+  color: cssColor(slate);
+}
+
+.Reviews__detail {
+  display: flex;
+  flex-direction: column;
+  margin: viewportSize(8) 0 viewportSize(24);
+
+  strong {
+    @include fontStyling("Clash Display", 16, 500);
+  }
+
+  span {
+    @include fontStyling("Archivo", 14, 300);
+    color: cssColor(slate);
+  }
+}
+
+.Reviews__comment {
+  @include fontStyling("Archivo", 16, 400);
+}
