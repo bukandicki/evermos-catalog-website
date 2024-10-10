@@ -1,3 +1,9 @@
-.AnimatedText {
+.AnimatedText__mask {
+  display: inline-flex;
+  overflow: hidden;
+}
 
+.AnimatedText__word {
+  display: inline-flex;
+  transform: translateY(100%);
 }
