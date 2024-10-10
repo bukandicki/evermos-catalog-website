@@ -1,3 +1,11 @@
+export type ReviewType = {
+  rating: number;
+  comment: string;
+  date: Date;
+  reviewerName: string;
+  reviewerEmail: string;
+}
+
 export type ProductCategoryType = {
   slug: string;
   name: string;
@@ -14,7 +22,7 @@ export type ProductType = {
   availabilityStatus: string;
   discountPercentage: string;
   rating: number;
-  reviews: any[];
+  reviews: ReviewType[];
 }
 
 export type ProductPagination = {
@@ -26,3 +34,11 @@ export type ProductPagination = {
 export type ProductDataResponse = {
   products: ProductType[];
 } & ProductPagination
+
+
+export type ProductDetailType = {
+  images: string[];
+  brand: string;
+  warrantyInformation: string;
+  shippingInformation: string;
+} & ProductType
