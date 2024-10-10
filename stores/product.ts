@@ -1,10 +1,10 @@
 import { PRODUCT_FIELDS } from "~/lib/constants"
-import type { ProductCategoryType, ProductDataResponse, ProductType } from "~/lib/types"
+import type { ProductCategoryType, ProductDataResponse, ProductDetailType } from "~/lib/types"
 
 export const useProductStore = defineStore("product", () => {
   const { public: { baseApi } } = useRuntimeConfig()
 
-  const productDetail = ref<ProductType | null>(null)
+  const productDetail = ref<ProductDetailType | null>(null)
   const productData = ref<ProductDataResponse | null>(null)
   const categories = ref<ProductCategoryType[] | null>([])
 
@@ -36,12 +36,14 @@ export const useProductStore = defineStore("product", () => {
     productData.value = data.value
   }
 
-  async function fetchProductDetail(id: number): Promise<void> {
-    const { data } = await useFetch<
-      ProductDataResponse
-    >(`${baseApi}/products/${id}?select=${productFieldNames}`)
+  async function fetchProductDetail(id: string): Promise<void> {
+    const additionalFields = ",images,brand,warrantyInformation,shippingInformation"
 
-    productData.value = data.value
+    const { data } = await useFetch<
+      ProductDetailType
+    >(`${baseApi}/products/${id}?select=${productFieldNames + additionalFields}`)
+
+    productDetail.value = data.value
   }
 
   return {
