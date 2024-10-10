@@ -82,7 +82,7 @@
     color: cssColor(eerie);
     margin-bottom: viewportSize(4);
 
-    span {
+    > span {
       display: block;
     }
   }
@@ -185,7 +185,7 @@
     @include fontStyling("Clash Display", 16, 500);
   }
 
-  span {
+  > span {
     @include fontStyling("Archivo", 14, 300);
     color: cssColor(slate);
   }
