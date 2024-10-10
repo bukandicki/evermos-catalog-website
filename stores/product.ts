@@ -6,6 +6,11 @@ export const useProductStore = defineStore("product", () => {
 
   const productDetail = ref<ProductDetailType | null>(null)
   const productData = ref<ProductDataResponse | null>(null)
+  const filter = ref<{ category: string; sortBy: string; order: "asc" | "desc"; }>({
+    category: "all",
+    sortBy: "discountPercentage",
+    order: "desc"
+  })
   const categories = ref<ProductCategoryType[] | null>([])
 
   const productFieldNames = PRODUCT_FIELDS.map(f => f.name).join(",")
@@ -50,6 +55,7 @@ export const useProductStore = defineStore("product", () => {
     productData,
     categories,
     productDetail,
+    filter,
     fetchCategories,
     fetchProducts,
     fetchProductDetail
