@@ -4,6 +4,7 @@
   import StarIcon from "~/assets/icons/star-icon.vue"
   import SortIcon from "~/assets/icons/sort-icon.vue"
   import FilterIcon from "~/assets/icons/filter-icon.vue"
+  import CategoryIcon from "~/assets/icons/category-icon.vue"
 
   definePageMeta({ name: "CatalogPage" })
 
@@ -17,6 +18,12 @@
     order: "desc"
   })
 
+  store.fetchCategories()
+  store.fetchProducts({
+    limit: 12,
+    sortBy: { field: filter.value.sortBy, order: filter.value.order }
+  })
+
   const publicProductField = computed(() => {
     return PRODUCT_FIELDS.reduce((filtered, current) => {
       if (current.public) filtered.push({ title: current.title, value: current.name })
@@ -25,10 +32,15 @@
     }, [] as FilterMenuItem<string>[])
   })
 
-  store.fetchCategories()
-  store.fetchProducts({
-    limit: 12,
-    sortBy: { field: filter.value.sortBy, order: filter.value.order }
+  const formattedCategoryList = computed(() => {
+    let defaultLists = [{ title: "All", value: "all" }]
+
+    if (!store.categories?.length) return defaultLists
+
+    return [
+      ...defaultLists,
+      ...store.categories.map(category => ({ title: category.name, value: category.slug }))
+    ]
   })
 
   watch(filter, (newVal) => {
@@ -68,33 +80,32 @@
               <SortIcon />
             </template>
           </FilterMenu>
+
+          <FilterMenu
+            title="Category"
+            :value="filter.category"
+            :items="formattedCategoryList"
+            @selected="filter.category = $event"
+          >
+            <template #icon>
+              <CategoryIcon />
+            </template>
+          </FilterMenu>
         </div>
 
         <ul class="Product__categories">
-          <li>
-            <button
-              :class="[
-                'Category__btn',
-                { 'Category__btn--selected': filter.category === 'all' }
-              ]"
-              @click="filter.category = 'all'"
-            >
-              All
-            </button>
-          </li>
-
           <li
-            v-for="category in store.categories?.slice(0, 5)"
-            :key="category.slug"
+            v-for="category in formattedCategoryList"
+            :key="category.value"
           >
             <button
               :class="[
                 'Category__btn',
-                { 'Category__btn--selected': filter.category === category.slug }
+                { 'Category__btn--selected': filter.category === category.value }
               ]"
-              @click="filter.category = category.slug"
+              @click="filter.category = category.value"
             >
-              {{ category.name }}
+              {{ category.title }}
             </button>
           </li>
         </ul>
