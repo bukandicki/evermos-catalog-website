@@ -13,6 +13,7 @@
 
       <NuxtLink href="/">
         <NuxtImg
+          format="webp"
           src="/images/evermos-logo.png"
           class="Header__brand"
         />

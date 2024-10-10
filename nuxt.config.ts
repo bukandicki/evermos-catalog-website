@@ -11,7 +11,7 @@ export default defineNuxtConfig({
 
   css: ["~/assets/scss/preflight.scss"],
 
-  image: { quality: 100 },
+  image: { quality: 75, domains: ["cdn.dummyjson.com"] },
 
   fonts: {
     defaults: { style: ["normal"] },
