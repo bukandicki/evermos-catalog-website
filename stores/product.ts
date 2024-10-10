@@ -15,7 +15,7 @@ export const useProductStore = defineStore("product", () => {
       ProductCategoryType[]
     >(`${baseApi}/products/categories?limit=5`)
 
-    categories.value = data.value
+    categories.value = data.value ? data.value.slice(0, 5) : []
   }
 
   async function fetchProducts({ category, sortBy, limit }: {
