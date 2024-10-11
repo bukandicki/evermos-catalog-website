@@ -253,21 +253,23 @@
         </li>
       </ol>
 
-      <div class="Product__message">
-        <span
-          v-if="store.loadingStates.productList || status === 'pending'"
-        >
-          More goodies incoming!
-        </span>
+      <ClientOnly>
+        <div class="Product__message">
+          <span
+            v-if="store.loadingStates.productList"
+          >
+            More goodies incoming!
+          </span>
 
-        <span
-          v-if="isAllProductsLoaded"
-        >
-          {{ store.productData?.products.length }} /
-          {{ store.filter.totalProducts }} —
-          That's it — you've seen it all!
-        </span>
-      </div>
+          <span
+            v-if="isAllProductsLoaded"
+          >
+            {{ store.productData?.products.length }} /
+            {{ store.filter.totalProducts }} —
+            That's it — you've seen it all!
+          </span>
+        </div>
+      </ClientOnly>
     </section>
   </main>
 </template>
