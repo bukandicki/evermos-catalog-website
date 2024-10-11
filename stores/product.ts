@@ -69,6 +69,9 @@ export const useProductStore = defineStore("product", () => {
         }
       })
 
+      console.log("========= Product =========");
+
+
       // Reset initial value when start the infinite
       if (filter.value.limit === 8) {
         filter.value.limit = 4
