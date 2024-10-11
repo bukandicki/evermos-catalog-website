@@ -29,15 +29,20 @@ export const useProductStore = defineStore("product", () => {
 
   const productFieldNames = PRODUCT_FIELDS.map(f => f.name).join(",")
 
-  async function fetchCategories(): Promise<void> {
+  async function fetchCategories(): Promise<ProductCategoryType[] | undefined> {
     try {
       loadingStates.value.categories = true
 
       const data = await $fetch<
         ProductCategoryType[]
-      >(`${baseApi}/products/categories?limit=5`)
+      >(`${baseApi}/products/categories`, {
+        cache: "force-cache",
+        method: "GET",
+      })
 
       categories.value = data.slice(0, 5)
+
+      return data
     } catch (err) {
       console.error(err)
     } finally {
@@ -45,7 +50,7 @@ export const useProductStore = defineStore("product", () => {
     }
   }
 
-  async function fetchProducts(init?: boolean): Promise<void> {
+  async function fetchProducts(): Promise<ProductDataResponse | undefined> {
     try {
       let path = `${baseApi}/products`
 
@@ -55,6 +60,7 @@ export const useProductStore = defineStore("product", () => {
 
       const data = await $fetch<ProductDataResponse>(path, {
         cache: "force-cache",
+        method: "GET",
         query: {
           limit: filter.value.limit,
           skip: filter.value.skip,
@@ -63,7 +69,8 @@ export const useProductStore = defineStore("product", () => {
         }
       })
 
-      if (init) {
+      // Reset initial value when start the infinite scroll
+      if (filter.value.limit === 8) {
         filter.value.limit = 4
         filter.value.skip = 8
       }
@@ -78,6 +85,8 @@ export const useProductStore = defineStore("product", () => {
         filter.value.totalProducts = data.total
         productData.value = data
       }
+
+      return data
     } catch (err) {
       console.error(err)
     } finally {
@@ -85,7 +94,7 @@ export const useProductStore = defineStore("product", () => {
     }
   }
 
-  async function fetchProductDetail(id: string): Promise<void> {
+  async function fetchProductDetail(id: string): Promise<ProductDetailType | undefined> {
     try {
       const additionalFields = ",images,brand,warrantyInformation,shippingInformation"
 
@@ -93,9 +102,16 @@ export const useProductStore = defineStore("product", () => {
 
       const data = await $fetch<
         ProductDetailType
-      >(`${baseApi}/products/${id}?select=${productFieldNames + additionalFields}`)
+      >(`${baseApi}/products/${id}`, {
+        method: "GET",
+        query: {
+          select: productFieldNames + additionalFields
+        }
+      })
 
       productDetail.value = data
+
+      return data
     } catch (err) {
       console.error(err)
     } finally {
