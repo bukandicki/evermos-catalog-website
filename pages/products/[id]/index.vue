@@ -7,7 +7,7 @@
   const store = useProductStore()
   const img = useImage()
 
-  await store.fetchProductDetail(route.params.id as string)
+  await useAsyncData("product_detail", () => store.fetchProductDetail(route.params.id as string))
 
   const activeImage = ref<string>("")
 
