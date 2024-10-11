@@ -69,10 +69,10 @@ export const useProductStore = defineStore("product", () => {
         }
       })
 
-      // Reset initial value when start the infinite scroll
+      // Reset initial value when start the infinite
       if (filter.value.limit === 8) {
         filter.value.limit = 4
-        filter.value.skip = 8
+        filter.value.skip = 4
       }
 
       if (productData.value && filter.value.skip) {

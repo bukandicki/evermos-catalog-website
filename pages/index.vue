@@ -35,6 +35,10 @@
     ]
   })
 
+  const isAllProductsLoaded = computed(() => {
+    return (store.productData?.products.length as number) === (store.filter.totalProducts as number)
+  })
+
   const handleCategorySelected = <T extends keyof FilterType>(
     key: T, value: FilterType[T]
   ) => {
@@ -52,7 +56,7 @@
     if (
       reachBottom &&
       !store.loadingStates.productList &&
-      (store.productData?.products.length as number) < (store.filter.totalProducts as number)
+      !isAllProductsLoaded.value
     ) {
       store.filter.skip += 4
     }
@@ -251,8 +255,10 @@
         </span>
 
         <span
-          v-if="(store.productData?.products.length as number) >= (store.filter.totalProducts as number)"
+          v-if="isAllProductsLoaded"
         >
+          {{ store.productData?.products.length }} /
+          {{ store.filter.totalProducts }} —
           That's it — you've seen it all!
         </span>
       </div>
