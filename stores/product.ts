@@ -10,12 +10,16 @@ import { PRODUCT_FIELDS } from "~/lib/constants"
 export const useProductStore = defineStore("product", () => {
   const { public: { baseApi } } = useRuntimeConfig()
 
-  const loadingStates = ref<Map<string, boolean>>(new Map)
+  const loadingStates = ref({
+    categories: false,
+    productList: false,
+    productDetail: false,
+  })
   const productDetail = ref<ProductDetailType | null>(null)
   const productData = ref<ProductDataResponse | null>(null)
   const filter = ref<FilterType>({
     category: "all",
-    limit: 20,
+    limit: 8,
     skip: 0,
     totalProducts: undefined,
     sortBy: "discountPercentage",
@@ -26,60 +30,77 @@ export const useProductStore = defineStore("product", () => {
   const productFieldNames = PRODUCT_FIELDS.map(f => f.name).join(",")
 
   async function fetchCategories(): Promise<void> {
-    loadingStates.value.set("product_categories", true)
+    try {
+      loadingStates.value.categories = true
 
-    const { data } = await useFetch<
-      ProductCategoryType[]
-    >(`${baseApi}/products/categories?limit=5`)
+      const data = await $fetch<
+        ProductCategoryType[]
+      >(`${baseApi}/products/categories?limit=5`)
 
-    categories.value = data.value ? data.value.slice(0, 5) : []
-
-    loadingStates.value.set("product_categories", false)
+      categories.value = data.slice(0, 5)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      loadingStates.value.categories = false
+    }
   }
 
-  async function fetchProducts(): Promise<void> {
-    let path = `${baseApi}/products`
+  async function fetchProducts(init?: boolean): Promise<void> {
+    try {
+      let path = `${baseApi}/products`
 
-    if (filter.value.category && filter.value.category !== "all") path += `/category/${filter.value.category}`
+      if (filter.value.category && filter.value.category !== "all") path += `/category/${filter.value.category}`
 
-    loadingStates.value.set("product_lists", true)
+      loadingStates.value.productList = true
 
-    const { data } = await useFetch<ProductDataResponse>(path, {
-      cache: "force-cache",
-      query: {
-        limit: filter.value.limit,
-        skip: filter.value.skip,
-        sortBy: filter.value.sortBy,
-        order: filter.value.order,
+      const data = await $fetch<ProductDataResponse>(path, {
+        cache: "force-cache",
+        query: {
+          limit: filter.value.limit,
+          skip: filter.value.skip,
+          sortBy: filter.value.sortBy,
+          order: filter.value.order,
+        }
+      })
+
+      if (init) {
+        filter.value.limit = 4
+        filter.value.skip = 8
       }
-    })
 
-    if (productData.value && filter.value.skip) {
-      productData.value.products = [
-        ...productData.value.products,
-        ...data.value?.products as ProductType[]
-      ]
+      if (productData.value && filter.value.skip) {
+        productData.value.products = [
+          ...productData.value.products,
+          ...data.products as ProductType[]
+        ]
+      }
+      else {
+        filter.value.totalProducts = data.total
+        productData.value = data
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      loadingStates.value.productList = false
     }
-    else {
-      filter.value.totalProducts = data.value?.total
-      productData.value = data.value
-    }
-
-    loadingStates.value.set("product_lists", false)
   }
 
   async function fetchProductDetail(id: string): Promise<void> {
-    const additionalFields = ",images,brand,warrantyInformation,shippingInformation"
+    try {
+      const additionalFields = ",images,brand,warrantyInformation,shippingInformation"
 
-    loadingStates.value.set("product_detail", true)
+      loadingStates.value.productDetail = true
 
-    const { data } = await useFetch<
-      ProductDetailType
-    >(`${baseApi}/products/${id}?select=${productFieldNames + additionalFields}`)
+      const data = await $fetch<
+        ProductDetailType
+      >(`${baseApi}/products/${id}?select=${productFieldNames + additionalFields}`)
 
-    productDetail.value = data.value
-
-    loadingStates.value.set("product_detail", false)
+      productDetail.value = data
+    } catch (err) {
+      console.error(err)
+    } finally {
+      loadingStates.value.productDetail = false
+    }
   }
 
   return {

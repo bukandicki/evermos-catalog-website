@@ -51,17 +51,15 @@
 
     if (
       reachBottom &&
-      !store.loadingStates.get("product_lists") &&
+      !store.loadingStates.productList &&
       (store.productData?.products.length as number) < (store.filter.totalProducts as number)
     ) {
-      store.filter.skip += 20
-
-      store.fetchProducts()
+      store.filter.skip += 4
     }
   }
 
   store.fetchCategories()
-  store.fetchProducts()
+  store.fetchProducts(true)
 
   watch(store.filter, () => {
     store.fetchProducts()
@@ -249,7 +247,7 @@
 
       <div class="Product__message">
         <span
-          v-if="store.loadingStates.get('product_lists')"
+          v-if="store.loadingStates.productList"
         >
           More goodies incoming!
         </span>
