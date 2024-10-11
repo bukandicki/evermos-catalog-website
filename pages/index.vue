@@ -36,7 +36,7 @@
   })
 
   const isAllProductsLoaded = computed(() => {
-    return (store.productData?.products.length as number) === (store.filter.totalProducts as number)
+    return (store.productData?.products.length as number) >= (store.filter.totalProducts as number)
   })
 
   const handleCategorySelected = <T extends keyof FilterType>(
