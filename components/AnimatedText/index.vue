@@ -6,13 +6,16 @@
 
   const props = defineProps<{ value: string }>()
 
+  const animated = ref<boolean>(false)
+
   const splitedText = computed(() => {
     return props.value.split(/(\s+)/)
   })
 
   onMounted(() => {
-    ScrollTrigger.batch(".AnimatedText", {
+    ScrollTrigger.batch(".AnimatedText[data-animated='false']", {
       once: true,
+      batchMax: 4,
       onEnter: (elements) => {
         elements.forEach((container, idx) => {
           const wordElements = container.querySelectorAll(".AnimatedText__word")
@@ -21,7 +24,10 @@
             y: 0,
             delay: 0.080 * idx,
             duration: .85,
-            ease: "power2.out"
+            ease: "power2.out",
+            onComplete: () => {
+              animated.value = true
+            }
           })
         })
       }
@@ -34,19 +40,23 @@
 </script>
 
 <template>
-  <span class="AnimatedText">
-    <template
-      v-for="(text, idx) in splitedText"
-      :key="idx"
-    >
-      <span
-        v-if="text !== ' '"
-        class="AnimatedText__mask"
-      >
-        <span class="AnimatedText__word">{{ text }}</span>
-      </span>
+  <span class="AnimatedText" :data-animated="animated">
+    <template v-if="animated">{{ value }}</template>
 
-      <template v-else>{{ " " }}</template>
+    <template v-else>
+      <template
+        v-for="(text, idx) in splitedText"
+        :key="idx"
+      >
+        <span
+          v-if="text !== ' '"
+          class="AnimatedText__mask"
+        >
+          <span class="AnimatedText__word">{{ text }}</span>
+        </span>
+
+        <template v-else>{{ " " }}</template>
+      </template>
     </template>
   </span>
 </template>
