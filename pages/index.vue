@@ -58,12 +58,10 @@
     }
   }
 
-  store.fetchCategories()
-  store.fetchProducts(true)
-
-  watch(store.filter, () => {
-    store.fetchProducts()
-  }, { deep: true })
+  await useAsyncData("categories", () => store.fetchCategories())
+  await useAsyncData("products", () => store.fetchProducts(), {
+    watch: [store.filter]
+  })
 
   onMounted(() => {
     const heroTimeline = gsap.timeline({
