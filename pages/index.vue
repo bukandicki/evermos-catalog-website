@@ -51,10 +51,10 @@
 
     if (
       reachBottom &&
-      !store.loadingStates.get("product_categories") &&
+      !store.loadingStates.get("product_lists") &&
       (store.productData?.products.length as number) < (store.filter.totalProducts as number)
     ) {
-      store.filter.skip += 12
+      store.filter.skip += 20
 
       store.fetchProducts()
     }
@@ -246,6 +246,20 @@
           </NuxtLink>
         </li>
       </ol>
+
+      <div class="Product__message">
+        <span
+          v-if="store.loadingStates.get('product_lists')"
+        >
+          More goodies incoming!
+        </span>
+
+        <span
+          v-if="(store.productData?.products.length as number) >= (store.filter.totalProducts as number)"
+        >
+          That's it — you've seen it all!
+        </span>
+      </div>
     </section>
   </main>
 </template>
