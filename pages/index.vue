@@ -112,6 +112,7 @@
         width="500"
         sizes="100vw md:300px"
         format="webp"
+        alt="Hero Image"
         preload
       />
 
@@ -121,6 +122,7 @@
         width="700"
         sizes="100vw md:300px"
         format="webp"
+        alt="Hero Image"
         preload
       />
 
@@ -130,6 +132,7 @@
         width="400"
         sizes="100vw md:300px"
         format="webp"
+        alt="Hero Image"
         preload
       />
 
@@ -139,6 +142,7 @@
         width="300"
         sizes="100vw md:300px"
         format="webp"
+        alt="Hero Image"
         preload
       />
     </section>
@@ -191,6 +195,7 @@
                 { 'Category__btn--selected': store.filter.category === category.value }
               ]"
               @click="() => handleCategorySelected('category', category.value)"
+              :aria-label="`${category.title} Category`"
             >
               <LazyAnimatedText
                 :value="category.title"
@@ -208,8 +213,9 @@
           <NuxtLink
             class="Product__box"
             :href="`/products/${product.id}`"
+            :aria-label="`${product.title} Detail Link`"
           >
-            <button class="Product__cta">Add to cart</button>
+            <button class="Product__cta" aria-label="Add to cart">Add to cart</button>
 
             <div class="Product__image">
               <NuxtImg
