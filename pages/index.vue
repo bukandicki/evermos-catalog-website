@@ -41,6 +41,7 @@
 
   await useAsyncData("categories", () => store.fetchCategories())
   const { status } = await useAsyncData("products", () => store.fetchProducts(), {
+    server: true,
     watch: [store.filter]
   })
 
@@ -63,6 +64,8 @@
       status.value !== 'pending' &&
       !isAllProductsLoaded.value
     ) {
+      console.log("IS THIS RUN ON PROD?");
+
       store.filter.skip += 4
     }
   }
