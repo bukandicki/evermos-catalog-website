@@ -15,7 +15,7 @@ export const useProductStore = defineStore("product", () => {
   const productData = ref<ProductDataResponse | null>(null)
   const filter = ref<FilterType>({
     category: "all",
-    limit: 12,
+    limit: 20,
     skip: 0,
     totalProducts: undefined,
     sortBy: "discountPercentage",
@@ -45,6 +45,7 @@ export const useProductStore = defineStore("product", () => {
     loadingStates.value.set("product_lists", true)
 
     const { data } = await useFetch<ProductDataResponse>(path, {
+      cache: "force-cache",
       query: {
         limit: filter.value.limit,
         skip: filter.value.skip,

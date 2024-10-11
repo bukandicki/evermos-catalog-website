@@ -284,3 +284,10 @@
   @include fontStyling("Archivo", 16, 300);
   color: cssColor(slate);
 }
+
+.Product__message {
+  @include fontStyling("Archivo", 16, 300);
+  color: cssColor(slate);
+  padding: viewportSize(32) 0;
+  text-align: center;
+}
