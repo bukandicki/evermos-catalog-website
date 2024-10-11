@@ -10,7 +10,7 @@
   import FilterIcon from "~/assets/icons/filter-icon.vue"
   import CategoryIcon from "~/assets/icons/category-icon.vue"
 
-  definePageMeta({ name: "CatalogPage" })
+  definePageMeta({ name: "CatalogPage", scrollToTop: true })
 
   useSeoMeta({ title: "Catalog" })
 
@@ -39,6 +39,11 @@
     return (store.productData?.products.length as number) >= (store.filter.totalProducts as number)
   })
 
+  await useAsyncData("categories", () => store.fetchCategories())
+  const { status } = await useAsyncData("products", () => store.fetchProducts(), {
+    watch: [store.filter]
+  })
+
   const handleCategorySelected = <T extends keyof FilterType>(
     key: T, value: FilterType[T]
   ) => {
@@ -55,17 +60,12 @@
 
     if (
       reachBottom &&
-      !store.loadingStates.productList &&
+      status.value !== 'pending' &&
       !isAllProductsLoaded.value
     ) {
       store.filter.skip += 4
     }
   }
-
-  await useAsyncData("categories", () => store.fetchCategories())
-  await useAsyncData("products", () => store.fetchProducts(), {
-    watch: [store.filter]
-  })
 
   onMounted(() => {
     const heroTimeline = gsap.timeline({
@@ -255,7 +255,7 @@
 
       <div class="Product__message">
         <span
-          v-if="store.loadingStates.productList"
+          v-if="store.loadingStates.productList || status === 'pending'"
         >
           More goodies incoming!
         </span>

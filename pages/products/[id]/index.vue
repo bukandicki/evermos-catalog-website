@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import gsap from 'gsap';
 
-  definePageMeta({ name: "CatalogDetaiPage" })
+  definePageMeta({ name: "CatalogDetaiPage", scrollToTop: true })
 
   const route = useRoute()
   const store = useProductStore()
