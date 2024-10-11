@@ -1,3 +1,5 @@
+import type { FilterType } from "../types";
+
 export const PRODUCT_FIELDS = [
   { name: "id", title: "id", public: false },
   { name: "title", title: "Title", public: true },
@@ -11,7 +13,7 @@ export const PRODUCT_FIELDS = [
   { name: "discountPercentage", title: "Discount", public: true }
 ]
 
-export const FILTER_ORDER: { title: string; value: "asc" | "desc" }[] = [
+export const FILTER_ORDER: { title: string; value: FilterType["order"] }[] = [
   { title: "A - Z", value: "asc" },
   { title: "Z - A", value: "desc" }
 ]

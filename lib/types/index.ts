@@ -42,3 +42,12 @@ export type ProductDetailType = {
   warrantyInformation: string;
   shippingInformation: string;
 } & ProductType
+
+export type FilterType = {
+  category: string;
+  sortBy: string;
+  order: "asc" | "desc";
+  limit: number;
+  skip: number;
+  totalProducts: number | undefined;
+}

@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import type { FilterMenuItem } from "~/components/FilterMenu/FilterMenu.types";
   import { FILTER_ORDER, PRODUCT_FIELDS } from "~/lib/constants";
+  import type { FilterType } from "~/lib/types";
+
   import gsap from "gsap";
 
   import StarIcon from "~/assets/icons/star-icon.vue"
@@ -33,19 +35,36 @@
     ]
   })
 
-  store.fetchCategories()
-  store.fetchProducts({
-    category: store.filter.category,
-    limit: 12,
-    sortBy: { field: store.filter.sortBy, order: store.filter.order }
-  })
+  const handleCategorySelected = <T extends keyof FilterType>(
+    key: T, value: FilterType[T]
+  ) => {
+    store.filter.skip = 0
+    store.filter.totalProducts = 0
+    store.filter[key] = value
+  }
 
-  watch(store.filter, (newVal) => {
-    store.fetchProducts({
-      category: newVal.category,
-      limit: 12,
-      sortBy: { field: newVal.sortBy, order: newVal.order }
-    })
+  const handleInfiniteScroll = () => {
+    const scrollProgress = document.documentElement.scrollTop + window.innerHeight
+    const scrollHeight = document.documentElement.scrollHeight
+
+    const reachBottom = scrollProgress >= scrollHeight
+
+    if (
+      reachBottom &&
+      !store.loadingStates.get("product_categories") &&
+      (store.productData?.products.length as number) < (store.filter.totalProducts as number)
+    ) {
+      store.filter.skip += 12
+
+      store.fetchProducts()
+    }
+  }
+
+  store.fetchCategories()
+  store.fetchProducts()
+
+  watch(store.filter, () => {
+    store.fetchProducts()
   }, { deep: true })
 
   onMounted(() => {
@@ -56,11 +75,17 @@
       }
     })
 
+    window.addEventListener("scroll", handleInfiniteScroll)
+
     heroTimeline
       .to("#Hero__img-1", { y: 0 })
       .to("#Hero__img-2", { y: 0 }, .25)
       .to("#Hero__img-3", { y: 0 }, .3)
       .to("#Hero__img-4", { y: 0 }, .45)
+  })
+
+  onBeforeUnmount(() => {
+    window.removeEventListener("scroll", handleInfiniteScroll)
   })
 </script>
 
@@ -125,7 +150,7 @@
             title="Sort By"
             :value="store.filter.sortBy"
             :items="publicProductField"
-            @selected="store.filter.sortBy = $event"
+            @selected="(val) => handleCategorySelected('sortBy', val)"
           >
             <template #icon>
               <FilterIcon />
@@ -136,7 +161,7 @@
             title="Order"
             :value="store.filter.order"
             :items="FILTER_ORDER"
-            @selected="store.filter.order = $event"
+            @selected="(val) => handleCategorySelected('order', val)"
           >
             <template #icon>
               <SortIcon />
@@ -147,7 +172,7 @@
             title="Category"
             :value="store.filter.category"
             :items="formattedCategoryList"
-            @selected="store.filter.category = $event"
+            @selected="(val) => handleCategorySelected('category', val)"
           >
             <template #icon>
               <CategoryIcon />
@@ -165,7 +190,7 @@
                 'Category__btn',
                 { 'Category__btn--selected': store.filter.category === category.value }
               ]"
-              @click="store.filter.category = category.value"
+              @click="() => handleCategorySelected('category', category.value)"
             >
               <LazyAnimatedText
                 :value="category.title"
