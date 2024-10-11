@@ -52,6 +52,9 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    define: {
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
+    },
     css: {
       preprocessorOptions: {
         scss: {
@@ -62,5 +65,5 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-04-03',
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 })
