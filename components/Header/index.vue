@@ -7,15 +7,16 @@
 <template>
   <header class="Header">
     <div class="Header__controls">
-      <button>
+      <button aria-label="Burger Menu">
         <MenuIcon />
       </button>
 
-      <NuxtLink href="/">
+      <NuxtLink aria-label="Back to home link" href="/">
         <NuxtImg
           format="webp"
           src="/images/evermos-logo.png"
           class="Header__brand"
+          alt="Header Brand"
         />
       </NuxtLink>
     </div>
@@ -23,22 +24,22 @@
     <nav class="Header__nav">
       <ul class="Nav__list Nav__list--center">
         <li class="Nav__item">
-          <button>
+          <button aria-label="About Link Page">
             <LazyAnimatedText value="About" />
           </button>
         </li>
         <li class="Nav__item">
-          <button>
+          <button aria-label="Membership Link Page">
             <LazyAnimatedText value="Membership" />
           </button>
         </li>
         <li class="Nav__item">
-          <button>
+          <button aria-label="Community Link Page">
             <LazyAnimatedText value="Community" />
           </button>
         </li>
         <li class="Nav__item">
-          <button>
+          <button aria-label="Blog Link Page">
             <LazyAnimatedText value="Blog" />
           </button>
         </li>
@@ -46,12 +47,12 @@
 
       <ul class="Nav__list Nav__list--right">
         <li class="Nav__item">
-          <button>
+          <button aria-label="Favorite Stuff">
             <HeartIcon />
           </button>
         </li>
         <li class="Nav__item">
-          <button>
+          <button aria-label="Cart">
             <CartIcon />
           </button>
         </li>

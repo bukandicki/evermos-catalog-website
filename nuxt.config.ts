@@ -3,6 +3,14 @@ export default defineNuxtConfig({
   ssr: true,
   modules: ['@pinia/nuxt', '@nuxt/image', '@nuxt/fonts'],
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: "en"
+      }
+    }
+  },
+
   runtimeConfig: {
     public: {
       baseApi: process.env.NUXT_BASE_API_URL

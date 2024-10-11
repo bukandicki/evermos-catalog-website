@@ -74,8 +74,8 @@
 
 <template>
   <div ref="filterMenuRef" class="FilterMenu">
-    <button class="FilterMenu__trigger" @click="handleShowList">
-      <slot name="icon" />
+    <button :aria-label="`${title} Filter Menu`" class="FilterMenu__trigger" @click="handleShowList">
+      <slot name="icon"></slot>
 
       <LazyAnimatedText :value="title" />
     </button>
@@ -91,6 +91,7 @@
             'FilterMenu__btn',
             { 'FilterMenu__btn--selected': value === item.value }
           ]"
+          :aria-label="`${item.title} ${title}`"
         >
           {{ item.title }}
         </button>

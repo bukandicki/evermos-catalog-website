@@ -172,7 +172,7 @@
 
 .Product__categories {
   display: none;
-  gap: viewportSize(32);
+  gap: viewportSize(14);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -184,10 +184,12 @@
 
 .Category__btn {
   @include fontStyling("Clash Display", 20, 500);
-  transition: color .35s cubic-bezier(0.87, 0, 0.13, 1);
+  transition: border-color .35s cubic-bezier(0.87, 0, 0.13, 1);
+  border: solid viewportSize(1) transparent;
+  padding: viewportSize(4) viewportSize(14);
 
   &--selected {
-    color: cssColor(french);
+    border-color: cssColor(eerie);
   }
 
   @include tablet-screen {

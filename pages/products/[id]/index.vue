@@ -107,7 +107,7 @@
         </strong>
 
         <div class="ProductDetail__purchase">
-          <button>
+          <button :aria-label="`Buy / $${store.productDetail?.price} USD`">
             <LazyAnimatedText
               :value="`Buy / $${store.productDetail?.price} USD`"
             />
